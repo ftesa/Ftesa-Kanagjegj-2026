@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Kanagjegji i Jusrës</title>
+    <style> * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        height: 100vh;
+        overflow: hidden;
+        font-family: Georgia, serif;
+        background: #f7f3f0;
+        color: #111;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .hearts {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 5;
+    }
+
+    .heart {
+        position: absolute;
+        color: rgba(184, 77, 118, 0.45);
+        animation: rise 5s linear forwards;
+    }
+
+    .invitation {
+        width: 100%;
+        max-width: 430px;
+        height: 100vh;
+        position: relative;
+        padding: 26px 20px;
+        text-align: center;
+        background: linear-gradient(rgba(255, 255, 255, .86), rgba(255, 255, 255, .86)), radial-gradient(circle at top, #f8c8dc, transparent 35%), radial-gradient(circle at bottom, #fde2e4, transparent 35%);
+        overflow: hidden;
+    }
+
+    .flowers {
+        position: absolute;
+        font-size: 3.6rem;
+        opacity: .72;
+        z-index: 1;
+    }
+
+    .top-left {
+        top: 5px;
+        left: 5px;
+        transform: rotate(-25deg);
+    }
+
+    .top-right {
+        top: 5px;
+        right: 5px;
+        transform: rotate(25deg);
+    }
+
+    .bottom-left {
+        bottom: 5px;
+        left: 5px;
+        transform: rotate(210deg);
+    }
+
+    .bottom-right {
+        bottom: 5px;
+        right: 5px;
+        transform: rotate(150deg);
+    }
+
+    .content {
+        height: 100%;
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        animation: fadeIn 1.2s ease;
+    }
+
+    .small-title {
+        font-size: .78rem;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: #b35b79;
+        margin-bottom: 10px;
+    }
+
+    .rings {
+        font-size: 2.7rem;
+        margin-bottom: 6px;
+        animation: float 3s ease-in-out infinite;
+    }
+
+    h1 {
+        font-size: clamp(2.5rem, 12vw, 4.3rem);
+        font-weight: normal;
+        color: #7a304b;
+        line-height: .95;
+        margin-bottom: 4px;
+    }
+
+    .names {
+        font-size: clamp(2rem, 8vw, 3.2rem);
+        font-weight: bold;
+        color: #9b3f61;
+        margin: 5px 0 12px;
+        font-family: "Brush Script MT", cursive;
+    }
+
+    .message {
+        font-size: .95rem;
+        line-height: 1.5;
+        max-width: 330px;
+        margin: 0 auto 16px;
+        color: #6b3b4a;
+    }
+
+    .details {
+        margin: 0 auto;
+        width: 100%;
+        max-width: 340px;
+        padding: 14px;
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.58);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 12px 35px rgba(169, 72, 103, 0.16);
+    }
+
+    .details p {
+        margin: 6px 0;
+        font-size: .95rem;
+        color: #5a2a3a;
+    }
+
+    .date {
+        font-size: 1.15rem !important;
+        font-weight: bold;
+        color: #8f3557 !important;
+    }
+
+    .countdown {
+        margin-top: 18px;
+        text-align: center;
+    }
+
+    .countdown h3 {
+        color: #8f3557;
+        font-size: .95rem;
+        margin-bottom: 10px;
+        letter-spacing: 1px;
+    }
+
+    .timer {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        flex-wrap: nowrap;
+    }
+
+    .time-box {
+        width: 68px;
+        height: 68px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, .65);
+        backdrop-filter: blur(8px);
+        box-shadow: 0 8px 20px rgba(184, 77, 118, .15);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .time-box span {
+        font-size: 1.55rem;
+        font-weight: bold;
+        color: #9b3f61;
+        line-height: 1;
+    }
+
+    .time-box small {
+        margin-top: 5px;
+        color: #666;
+        font-size: .68rem;
+        font-family: Arial, sans-serif;
+    }
+
+    .map-btn {
+        margin-top: 18px;
+        padding: 12px 24px;
+        border-radius: 999px;
+        border: none;
+        background: linear-gradient(135deg, #b84d76, #e88aaa);
+        color: white;
+        font-size: .9rem;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 10px 25px rgba(184, 77, 118, 0.35);
+        transition: .3s;
+    }
+
+    .map-btn:hover {
+        transform: translateY(-3px);
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes float {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-8px);
+        }
+    }
+
+    @keyframes rise {
+        from {
+            transform: translateY(100vh) scale(1);
+            opacity: 1;
+        }
+        to {
+            transform: translateY(-10vh) scale(1.8);
+            opacity: 0;
+        }
+    }
+
+    @media (max-width: 380px) {
+        .invitation {
+            padding: 20px 14px;
+        }
+
+        .time-box {
+            width: 60px;
+            height: 62px;
+        }
+
+        .time-box span {
+            font-size: 1.35rem;
+        }
+
+        .time-box small {
+            font-size: .62rem;
+        }
+    }
+
+    @media (max-height: 700px) {
+        .flowers {
+            font-size: 2.8rem;
+        }
+
+        .rings {
+            font-size: 2.2rem;
+        }
+
+        .message {
+            font-size: .85rem;
+            margin-bottom: 10px;
+        }
+
+        .details {
+            padding: 10px;
+        }
+
+        .countdown {
+            margin-top: 12px;
+        }
+
+        .map-btn {
+            margin-top: 12px;
+            padding: 10px 20px;
+        }
+    } </style>
+</head>
+<body>
+<div class="hearts" id="hearts"></div>
+<main class="invitation">
+    <div class="flowers top-left">💐</div>
+    <div class="flowers top-right">💐</div>
+    <div class="flowers bottom-left">💐</div>
+    <div class="flowers bottom-right">💐</div>
+    <section class="content">
+        <div class="small-title">Jeni të ftuar në</div>
+        <div class="rings">💍</div>
+        <h1>Kanagjegjin</h1>
+        <div class="names">e Jusrës</div>
+        <p class="message">Çdo moment i jetës bëhet më i bukur kur ndahet me njerëzit e zemrës.
+            Prandaj, me shumë dashuri dhe respekt, ju ftojmë të bëheni pjesë e gëzimit tonë, duke festuar së bashku kanagjegjin e vajzës sonë të dashur, Jusrës, e cila po nis një kapitull të ri në jetë.</p>
+        <p class="message"> Me shumë respekt nga familja Idrizi </p>
+        <div class="details"><p class="date">E premte, 7 Gusht 2026</p>
+            <p>🕖 7:00 PM</p>
+            <p>📍 Restaurant Agimi, fsh. Mateç</p></div>
+        <div class="countdown"><h3>Kanagjegji fillon për</h3>
+            <div class="timer" id="timer">
+                <div class="time-box"><span id="days">00</span> <small>Ditë</small></div>
+                <div class="time-box"><span id="hours">00</span> <small>Orë</small></div>
+                <div class="time-box"><span id="minutes">00</span> <small>Minuta</small></div>
+                <div class="time-box"><span id="seconds">00</span> <small>Sekonda</small></div>
+            </div>
+        </div>
+        <button class="map-btn" onclick="openMap()">GOOGLE MAPS</button>
+    </section>
+</main>
+<script> function createHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "♡";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 18 + 14 + "px";
+    heart.style.animationDuration = Math.random() * 2 + 4 + "s";
+    document.getElementById("hearts").appendChild(heart);
+    setTimeout(() => {
+        heart.remove();
+    }, 6000);
+}
+
+setInterval(createHeart, 500);
+const targetDate = new Date("2026-08-07T19:00:00").getTime();
+
+function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = targetDate - now;
+    if (distance <= 0) {
+        document.getElementById("timer").innerHTML = "<h2>🎉 Mirë se erdhët!</h2>";
+        return;
+    }
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    document.getElementById("days").textContent = days;
+    document.getElementById("hours").textContent = String(hours).padStart(2, "0");
+    document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
+    document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+function openMap() {
+    window.open("https://maps.app.goo.gl/AqVLULeMEzYS1WCn7", "_blank");
+} </script>
+</body>
+</html>
